@@ -1,0 +1,16 @@
+React:Notes
+
+===========================
+install boostrap:
+$npm i bootstrap@4.1.1
+ go to index.js:
+import 'bootstrap/dist/css/bootstrap.css';
+==========================
+imrc : import react component
+cc : class component
+
+
+
+
+==============================
+Ctrl+shift+R : for refactoring

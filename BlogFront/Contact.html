@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+  <head>
+    <title>blog</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/contact.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+    <!--
+        Inspired by this layout: 
+        https://www.w3schools.com/w3css/tryw3css_templates_blog.htm
+    -->
+  </head>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light"> 
+      <a class="navbar-brand " href="index.html">MK BLog</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link active" href="Contact.html">Contact Us</a>
+          <form class="form-inline">
+        
+            <button class="btn btn-outline-success my-2 my-sm-0 m-3" type="submit">Login</button>
+          </form>
+        </div>
+      </div>
+     
+    </nav> 
+    <body>
+	<div>
+
+<div class="wrapper">
+  <div class="title">
+    <h1>contact us form</h1>
+  </div>
+  <form id="fupForm" name="form1" method="post">
+  <div class="contact-form">
+    <div class="input-fields">
+      <input type="text" class="input" placeholder="name">
+      <input type="text" class="input" placeholder="email">
+      <input type="text" class="input" placeholder="phone">
+      <input type="text" class="input" placeholder="subject">
+    </div>
+    <div class="msg">
+      <textarea placeholder="Message" name="message"></textarea>
+      <button class="button" type="submit" name="save" id="butsave">Send</button>
+
+    </div>
+  </div>
+</form>
+</div>
+
+</div>
+<script>
+  $(document).ready(function() {
+    $('#butsave').on('click', function() {
+      $("#butsave").attr("disabled", "disabled");
+      var name = $('#name').val();
+      var email = $('#email').val();
+      var phone = $('#phone').val();
+      var subject = $('#subject').val();
+      var message = $('#message').val();
+      if(name!="" && email!="" && phone!="" &&message !=""){
+        $.ajax({
+          url: "./db/save.php",
+          type: "POST",
+          data: {
+            name: name,
+            email: email,
+            phone: phone,
+         
+            subject: subject,
+            message : message			
+          },
+          cache: false,
+          success: function(dataResult){
+            var dataResult = JSON.parse(dataResult);
+            if(dataResult.statusCode==200){
+              $("#butsave").removeAttr("disabled");
+              $('#fupForm').find('input:text').val('');
+              $("#success").show();
+              $('#success').html('Data added successfully !'); 						
+            }
+            else if(dataResult.statusCode==201){
+               alert("Error occured !");
+            }
+            
+          }
+        });
+      }
+      else{
+        alert('Please fill all the field !');
+      }
+    });
+  });
+  </script>
+	
+</body>
+</html>
